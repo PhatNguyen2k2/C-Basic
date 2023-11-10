@@ -3,31 +3,31 @@ using namespace std;
 
 typedef int Item;
 
-struct Node{
+struct Node {
 	Item data;
-	Node *next;
+	Node* next;
 };
 
-struct SList{
-	Node *head;
-	Node *tail;
+struct SList {
+	Node* head;
+	Node* tail;
 	long size;
-	
+
 	SList();
-	
+
 	Node* CreateNode(Item v);
 	void addFirst(const Item v);
-	void insertAfter(Node *p, Item v);
-	void insertBefore(Node *p, Item v);
+	void insertAfter(Node* p, Item v);
+	void insertBefore(Node* p, Item v);
 	void addLast(Item v);
 	void removeFirst();
 	void removeLast();
-	void remove(Node *p);		
+	void remove(Node* p);
 	void traverse() const;
-	Node* previous(Node *p);
+	Node* previous(Node* p);
 };
 
-SList::SList(){
+SList::SList() {
 	head = NULL;
 	tail = NULL;
 	size = 0;
@@ -36,12 +36,12 @@ SList::SList(){
 Node* SList::CreateNode(Item v)
 {
 	Node* p = new Node;
-	p->data = v;	
-	p->next = NULL;	
-	return p; 
+	p->data = v;
+	p->next = NULL;
+	return p;
 }
 
-void SList::addFirst(const Item v){
+void SList::addFirst(const Item v) {
 	Node* p = CreateNode(v);
 	p->next = head;
 	head = p;
@@ -50,42 +50,42 @@ void SList::addFirst(const Item v){
 	size++;
 }
 
-void SList::insertAfter(Node *p, Item v) {
+void SList::insertAfter(Node* p, Item v) {
 	if (p == tail)
 		addLast(v);
 	else {
-		Node *q = CreateNode(v);
+		Node* q = CreateNode(v);
 		q->next = p->next;
-		p->next = q;	  
+		p->next = q;
 	}
 	size++;
 }
 
-Node* SList::previous(Node *p) {
-	Node *t = head;
+Node* SList::previous(Node* p) {
+	Node* t = head;
 	while (t->next != p)
 		t = t->next;
 	return t;
 }
 
-void SList::insertBefore(Node *p, Item v) {
+void SList::insertBefore(Node* p, Item v) {
 	if (p == head)
 		addFirst(v);
-	else {		
-		Node *pre = previous(p);
+	else {
+		Node* pre = previous(p);
 		insertAfter(pre, v);
-	}	
+	}
 }
 
 void SList::addLast(Item v) {
-	Node *p = CreateNode(v);
+	Node* p = CreateNode(v);
 	if (size == 0) {
 		head = p;
 		tail = p;
 	}
 	else {
 		tail->next = p;
-		tail = p;	  
+		tail = p;
 	}
 	size = size + 1;
 }
@@ -93,7 +93,7 @@ void SList::addLast(Item v) {
 void SList::removeFirst() {
 	if (size == 0)
 		return;
-	Node *t = head;
+	Node* t = head;
 	head = head->next;
 	delete t;
 	size--;
@@ -107,15 +107,15 @@ void SList::removeLast() {
 		size--;
 		return;
 	}
-	Node *p = previous(tail);
-	Node *t = tail;	
+	Node* p = previous(tail);
+	Node* t = tail;
 	p->next = NULL;
 	tail = p;
 	delete t;
 	size--;
 }
 
-void SList::remove(Node *p) {
+void SList::remove(Node* p) {
 	if (p == head) {
 		removeFirst();
 		return;
@@ -124,7 +124,7 @@ void SList::remove(Node *p) {
 		removeLast();
 		return;
 	}
-	Node *pre = previous(p);
+	Node* pre = previous(p);
 	pre->next = p->next;
 	delete p;
 	size--;
